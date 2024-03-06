@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import uuid
+from db import Connection
 
 class Product(ABC):
     def __init__(self, name: str, price: float):
@@ -40,12 +41,12 @@ class InventoryManager:
 def main():
     manager = InventoryManager()
 
-    # Creating products
+    db = Connection(host='', user='', password='')
+
     product1 = manager.create_product("tshirt", "T-shirt", 19.99)
     product2 = manager.create_product("hoodie", "Hoodie", 39.99)
     product3 = manager.create_product("hat", "Hat", 9.99)
 
-    # Displaying products
     print(product1)
     print(product2)
     print(product3)
