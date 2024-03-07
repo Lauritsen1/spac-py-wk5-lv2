@@ -1,15 +1,27 @@
 from abc import ABC, abstractmethod
 import uuid
+from datetime import datetime
 from db import Connection
+from tabulate import tabulate
 
 class Product(ABC):
     def __init__(self, name: str, price: float):
         self.id = uuid.uuid4()
+        self.created_at = datetime.now()
         self.name = name
         self.price = price
 
     def __str__(self) -> str:
         return self.name
+    
+    def display_info(self) -> str:
+        data = [
+            ['id', self.id], 
+            ['name', self.name], 
+            ['price', self.price], 
+            ['created_at', self.created_at.strftime('%Y-%m-%d %H:%M')]]
+        table = tabulate(data, tablefmt='simple_grid')
+        return table
 
 class TShirt(Product):
     pass
@@ -41,15 +53,15 @@ class InventoryManager:
 def main():
     manager = InventoryManager()
 
-    db = Connection(host='', user='', password='')
+    db = Connection(host='localhost', user='root', password='password')
 
     product1 = manager.create_product("tshirt", "T-shirt", 19.99)
     product2 = manager.create_product("hoodie", "Hoodie", 39.99)
     product3 = manager.create_product("hat", "Hat", 9.99)
 
-    print(product1)
-    print(product2)
-    print(product3)
+    print(product1.display_info())
+    print(product2.display_info())
+    print(product3.display_info())
 
 if __name__ == '__main__':
     main()
