@@ -6,7 +6,7 @@ from tabulate import tabulate
 from .product import Product
 
 class Laptop(Product):
-    def __init__(self, name: str, price: float):
+    def __init__(self, name: str, price: int):
         super().__init__(name, price)
         self.id = uuid4()
         self.created_at = datetime.now()
