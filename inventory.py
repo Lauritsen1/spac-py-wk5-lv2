@@ -26,7 +26,10 @@ class Inventory:
         table = tabulate(data, headers=['ID', 'Name', 'Category', 'Price', 'Created At'], tablefmt='simple_grid')
         print(table)
 
-    def display_by_category(self, category) -> None:
-        data = [[product.id, product.name, product.category, product.price, product.created_at.strftime('%Y-%m-%d %H:%M')] for product in self.products if isinstance(product, category)]
-        table = tabulate(data, headers=['ID', 'Name', 'Category', 'Price', 'Created At'], tablefmt='simple_grid')
+    def display_by_category(self, category: str) -> None:
+        data = filter(lambda product: product.category == category, self.products)
+        test = []
+        for product in data:
+            test.append([product.id, product.name, product.category, product.price, product.created_at.strftime('%Y-%m-%d %H:%M')])
+        table = tabulate(test, headers=['ID', 'Name', 'Category', 'Price', 'Created At'], tablefmt='simple_grid')
         print(table)

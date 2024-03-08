@@ -1,6 +1,13 @@
+from enum import Enum
+
 from db import Connection
 from product_factory import ProductFactory
 from inventory import Inventory
+
+class Category(Enum):
+    TV = 'TV'
+    LAPTOP = 'Laptop'
+    PHONE = 'Phone'
 
 items = [
         {'name': 'Lenovo Thinkpad', 'category': 'Laptop', 'price': 3000},
@@ -22,6 +29,8 @@ def main():
             inventory.add_product(product)
 
     inventory.display_all()
+
+    # inventory.display_by_category(Category.TV.value)
 
 
 if __name__ == '__main__':
