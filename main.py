@@ -3,23 +3,23 @@ from product_factory import ProductFactory
 from inventory import Inventory
 
 items = [
-        {'type': 'Laptop', 'name': 'Lenovo Thinkpad', 'price': 3000},
-        {'type': 'Laptop', 'name': 'Macbook Pro', 'price': 15000},
-        {'type': 'TV', 'name': 'Samsung 75 4K QLED', 'price': 13000},
-        {'type': 'TV', 'name': 'LG 65 LED', 'price': 5000},
-        {'type': 'Phone', 'name': 'iPhone 12', 'price': 7000},
-        {'type': 'Phone', 'name': 'Samsung Galaxy S21', 'price': 8000},
+        {'name': 'Lenovo Thinkpad', 'category': 'Laptop', 'price': 3000},
+        {'name': 'Macbook Pro', 'category': 'Laptop', 'price': 15000},
+        {'name': 'Samsung 75 4K QLED', 'category': 'TV', 'price': 13000},
+        {'name': 'LG 65 LED', 'category': 'TV', 'price': 5000},
+        {'name': 'iPhone 12', 'category': 'Phone', 'price': 7000},
+        {'name': 'Samsung Galaxy S21', 'category': 'Phone',  'price': 8000},
     ]
 
 def main():
-    db = Connection('localhost', 'root', '1234')
-
     inventory = Inventory()
     product_factory = ProductFactory()
 
-    for item in items:
-        product = product_factory.create_product(item['type'], item['name'], item['price'])
-        inventory.add_product(product)
+    with Connection() as cursor:
+        for item in items:
+            product = product_factory.create_product(item['name'], item['category'], item['price'])
+            cursor.execute('INSERT INTO products(id, name, category, price, created_at) VALUES(?, ?, ?, ?, ?)', (str(product.id), product.name, product.category, product.price, product.created_at))
+            inventory.add_product(product)
 
     inventory.display_all()
 

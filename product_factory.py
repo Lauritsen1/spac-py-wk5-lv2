@@ -13,8 +13,8 @@ class ProductFactory:
             if isclass(_type) and issubclass(_type, products.Product):
                 self.product_types[name] = _type
 
-    def create_product(self, product_type, name, price, *args, **kwargs) -> products.Product:
-        if product_type in self.product_types:
-            return self.product_types[product_type](name, price, *args, **kwargs)
+    def create_product(self, name, category, price, *args, **kwargs) -> products.Product:
+        if category in self.product_types:
+            return self.product_types[category](name, category, price, *args, **kwargs)
         else:
-            raise ValueError(f"Invalid product type: {product_type}")
+            raise ValueError(f"Invalid product type: {category}")

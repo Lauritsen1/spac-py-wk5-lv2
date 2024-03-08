@@ -6,8 +6,8 @@ from tabulate import tabulate
 from .product import Product
 
 class Phone(Product):
-    def __init__(self, name: str, price: int):
-        super().__init__(name, price)
+    def __init__(self, name: str, category: str, price: int):
+        super().__init__(name, category, price)
         self.id = uuid4()
         self.created_at = datetime.now()
     
@@ -17,7 +17,8 @@ class Phone(Product):
     def display_info(self) -> None:
         data = [
             ['id', self.id], 
-            ['name', self.name], 
+            ['name', self.name],
+            ['category', self.category],
             ['price', self.price], 
             ['created_at', self.created_at.strftime('%Y-%m-%d %H:%M')]]
         table = tabulate(data, tablefmt='simple_grid')
